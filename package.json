@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "node db/seed.js"
+    "test": "npx jest --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mysql2": "^3.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "jest": "^29.6.1"
   }
 }
