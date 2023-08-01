@@ -93,16 +93,6 @@ describe("top10BiggestInPopulation", () => {
   });
 });
 
-describe("top10SmallestInPopulation", () => {
-  it("returns the correct result", async () => {
-    const result = await top10SmallestInPopulation();
-
-    expect(result).toHaveLength(10);
-    expect(rankOf(result, "Pitcairn")).toBe(0);
-    expect(rankOf(result, "Saint Helena")).toBe(9);
-  });
-});
-
 describe("top5LongestLifeExpectancy", () => {
   it("returns the correct result", async () => {
     const result = await top5LongestLifeExpectancy();
@@ -110,6 +100,16 @@ describe("top5LongestLifeExpectancy", () => {
     expect(result).toHaveLength(5);
     expect(rankOf(result, "Andorra")).toBe(0);
     expect(rankOf(result, "Singapore")).toBe(4);
+  });
+});
+
+describe("top10SmallestInPopulation", () => {
+  it("returns the correct result", async () => {
+    const result = await top10SmallestInPopulation();
+
+    expect(result).toHaveLength(10);
+    expect(rankOf(result, "Pitcairn")).toBe(0);
+    expect(rankOf(result, "Saint Helena")).toBe(9);
   });
 });
 
