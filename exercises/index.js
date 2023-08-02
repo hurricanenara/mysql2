@@ -7,122 +7,143 @@ const { execute } = require("./execute");
   3. 구글링하기
 */
 
-/*
-👍 Example
-France의 인구를 추출하세요
-추출할 칼럼: name, population
-*/
-const selectPopulationOfFrance = () => {
-  // Prepared statement를 활용해봅니다
-  // Prepared statement가 무엇인지 구글링해보고 간단하게 정리해보세요
-  const sql = `SELECT name, population FROM country WHERE name = ?`;
+// Constants
+const BOOKS_DB = "books";
+const SHOP_DB = "shop";
+const SCHOOL_DB = "school";
 
-  return execute(sql, ["France"]);
+/*
+ **********************************
+ *********  Aggregates  ***********
+ **********************************
+ */
+
+/*
+ W로 시작하는 책의 수를 조회하세요
+ */
+const numOfTitlesStartingWithW = () => {
+  const sql = ``;
+
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-Germany의 인구를 추출하세요
-추출할 칼럼: name, population
-*/
-const selectPopulationOfGermany = () => {
+제일 최근에 출판된 책 년도와 책 이름을 조회하세요
+칼럼: title, released_year
+ */
+const mostRecentlyReleasedBook = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-surfacearea가 2000보다 작고 gnp는 700보다 큰 나라들을 추출하세요
-추출할 칼럼: name, continent, gnp
-*/
-const smallWithHighGNP = () => {
+평균 재고보다 재고가 많은 책 수를 구하세요
+ */
+const booksWithStockHigherThanAvg = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-Sweden, Norway, Denmark의 인구를 추출하세요
-Required: IN절 활용하기
-추출할 칼럼: name, population
-*/
-const scandinavia = () => {
+재고가 제일 낮은 책을 구하세요
+칼럼: title, stock_quantity
+ */
+const booksWithLowestStock = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-G로 시작하는 나라들만 추출하세요
-추출할 칼럼: name
-*/
-const startsWithG = () => {
+ **********************************
+ **********  Grouping  ************
+ **********************************
+ */
+
+/*
+1개 이상의 책이 출판된 년도를 조회하세요
+칼럼: released_year, <aggregate function column>
+ */
+const yearsWithMoreThanOnePublished = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-y로 끝나는 나라들만 추출하세요
-추출할 칼럼: name
-*/
-const endsWithY = () => {
+각 년도의 출판된 책의 평균 페이지 수를 조회하고 평균 페이지 칼럼을 내림차순으로 정렬하세요
+칼럼: released_year
+ */
+const avgPageLengthOfBooksReleasedEachYear = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], BOOKS_DB);
 };
 
 /*
-인구가 제일 많은 나라 10곳을 인구 내림차순으로 추출하세요
-추출할 칼럼: name, population
-*/
-const top10BiggestInPopulation = () => {
+ **********************************
+ ********  One to Many  ***********
+ **********************************
+ */
+
+/*
+ 아직 주문을 하지 않은 소비자를 조회하세요
+ 칼럼: first_name
+ */
+const customersWhoHaveYetToOrder = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], SHOP_DB);
 };
 
 /*
-평균수명이 제일 긴 나라 5곳을 평균수명 내림차순으로 추출하세요
-추출할 칼럼 name, lifeexpectancy
+제일 소비를 많이 한 소비자 이름과 소비한 금액을 조회하세요
+칼럼: first_name, total_spent
 */
-const top5LongestLifeExpectancy = () => {
+const biggestSpender = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], SHOP_DB);
 };
 
 /*
-인구가 제일 작은 나라 10곳을 인구 오름차순으로 추출하세요
-추출할 칼럼: name, population
-hint: population이 0인 나라는 제외
-*/
-const top10SmallestInPopulation = () => {
-  const sql = ``;
+ **********************************
+ ********  Many to Many  ***********
+ **********************************
+ */
 
-  return execute(sql, []);
+/*
+Physics를 듣는 수강생을 조회하세요
+칼럼: first_name, last_name
+ */
+const studentsEnrolledInPhysics = () => {
+  const sql = `;`;
+
+  return execute(sql, [], SCHOOL_DB);
 };
 
-// BONUS: subquery 활용해보기
 /*
-프랑스의 인구보다 인구가 많은 나라들만 추출해보세요
-추출할 칼럼: name, population
-hint: select안 select를 활용해봅니다
+각 강의에 등록한 인원 수를 조회하세요
+칼럼: class_name, num_students
+조건: 등록 인원이 없는 강의도 포함
 */
-const largerThanFrance = () => {
+const numOfStudentsInEachClass = () => {
   const sql = ``;
 
-  return execute(sql, []);
+  return execute(sql, [], SCHOOL_DB);
 };
 
 module.exports = {
-  selectPopulationOfFrance,
-  selectPopulationOfGermany,
-  smallWithHighGNP,
-  scandinavia,
-  startsWithG,
-  endsWithY,
-  top10BiggestInPopulation,
-  top10SmallestInPopulation,
-  top5LongestLifeExpectancy,
-  largerThanFrance,
+  numOfTitlesStartingWithW,
+  mostRecentlyReleasedBook,
+  booksWithStockHigherThanAvg,
+  booksWithLowestStock,
+  yearsWithMoreThanOnePublished,
+  avgPageLengthOfBooksReleasedEachYear,
+  customersWhoHaveYetToOrder,
+  biggestSpender,
+  studentsEnrolledInPhysics,
+  numOfStudentsInEachClass,
 };

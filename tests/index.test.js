@@ -1,122 +1,120 @@
 const {
-  selectPopulationOfFrance,
-  selectPopulationOfGermany,
-  smallWithHighGNP,
-  scandinavia,
-  startsWithG,
-  endsWithY,
-  top10BiggestInPopulation,
-  top10SmallestInPopulation,
-  top5LongestLifeExpectancy,
-  largerThanFrance,
+  numOfTitlesStartingWithW,
+  mostRecentlyReleasedBook,
+  booksWithStockHigherThanAvg,
+  booksWithLowestStock,
+  yearsWithMoreThanOnePublished,
+  avgPageLengthOfBooksReleasedEachYear,
+  customersWhoHaveYetToOrder,
+  biggestSpender,
+  studentsEnrolledInPhysics,
+  numOfStudentsInEachClass,
 } = require("../exercises");
 
-const rankOf = (result, countryName) =>
-  result.findIndex((country) => country.name === countryName);
-
-describe("EXAMPLE: selectPopulationOfFrance", () => {
+describe("numOfTitlesStartingWithW", () => {
   it("returns the correct result", async () => {
-    const result = await selectPopulationOfFrance();
-    const france = result.find((country) => country["name"] === "France");
+    const result = await numOfTitlesStartingWithW();
+    const [dataObject] = result;
+    const count = Object.values(dataObject)[0];
 
     expect(result).toHaveLength(1);
-    expect(france).toBeTruthy();
-    expect(france.population).toEqual(59225700);
+    expect(count).toEqual(3);
   });
 });
 
-describe("selectPopulationOfGermany", () => {
+describe("mostRecentlyReleasedBook", () => {
   it("returns the correct result", async () => {
-    const result = await selectPopulationOfGermany();
-    const germany = result.find((country) => country["name"] === "Germany");
+    const [dataObject] = await mostRecentlyReleasedBook();
+    const columns = Object.keys(dataObject);
+
+    expect(columns).toHaveLength(2);
+    expect(dataObject.title).toEqual("Lincoln In The Bardo");
+    expect(dataObject.released_year).toEqual(2017);
+  });
+});
+
+describe("booksWithStockHigherThanAvg", () => {
+  it("returns the correct result", async () => {
+    const [dataObject] = await booksWithStockHigherThanAvg();
+    const count = Object.values(dataObject)[0];
+
+    expect(count).toEqual(4);
+  });
+});
+
+describe("booksWithLowestStock", () => {
+  it("returns the correct result", async () => {
+    const result = await booksWithLowestStock();
+    const stock_quantities = result.map((object) => object.stock_quantity);
+    const dataSet = new Set([...stock_quantities]);
+
+    expect(result).toHaveLength(2);
+    expect(dataSet.size).toBe(1);
+    expect(dataSet.has(12)).toBe(true);
+  });
+});
+
+describe("yearsWithMoreThanOnePublished", () => {
+  it("returns the correct result", async () => {
+    const result = await yearsWithMoreThanOnePublished();
+    const years = result.map((object) => object.released_year);
+
+    expect(result).toHaveLength(2);
+    expect(years).toContain(2003);
+    expect(years).toContain(2001);
+  });
+});
+
+describe("avgPageLengthOfBooksReleasedEachYear", () => {
+  it("returns the correct result", async () => {
+    const result = await avgPageLengthOfBooksReleasedEachYear();
+    const longestAverage = JSON.stringify(result[0]);
+    const shortedAverage = JSON.stringify(result[result.length - 1]);
+
+    expect(result).toHaveLength(16);
+    expect(longestAverage).toContain("634");
+    expect(shortedAverage).toContain("176");
+  });
+});
+
+describe("customersWhoHaveYetToOrder", () => {
+  it("returns the correct result", async () => {
+    const result = await customersWhoHaveYetToOrder();
+    const customerNames = result.map((object) => object.first_name);
+
+    expect(result).toHaveLength(2);
+    expect(customerNames).toContain("Alice");
+    expect(customerNames).toContain("John");
+  });
+});
+
+describe("biggestSpender", () => {
+  it("returns the correct result", async () => {
+    const result = await biggestSpender();
+    const customer = result[0];
 
     expect(result).toHaveLength(1);
-    expect(germany).toBeTruthy();
-    expect(germany.population).toEqual(82164700);
+    expect(customer.first_name).toBe("Winnie");
   });
 });
 
-describe("smallWithHighGNP", () => {
+describe("studentsEnrolledInPhysics", () => {
   it("returns the correct result", async () => {
-    const result = await smallWithHighGNP();
-    const randomCountryThatShouldExist = result.find(
-      (country) => country["name"] === "Singapore"
-    );
-
-    expect(result).toHaveLength(17);
-    expect(randomCountryThatShouldExist).toBeTruthy();
-  });
-});
-
-describe("scandinavia", () => {
-  it("returns the correct result", async () => {
-    const result = await scandinavia();
-    const countries = result.reduce((acc, el) => {
-      acc[el.name] = true;
-      return acc;
-    }, {});
+    const result = await studentsEnrolledInPhysics();
+    const firstNames = result.map((object) => object.first_name);
 
     expect(result).toHaveLength(3);
-    expect(countries["Sweden"]).toBe(true);
-    expect(countries["Norway"]).toBe(true);
-    expect(countries["Denmark"]).toBe(true);
+    expect(firstNames).toContain("Sally");
+    expect(firstNames).toContain("Winnie");
+    expect(firstNames).toContain("John");
   });
 });
 
-describe("startsWithG", () => {
+describe("numOfStudentsInEachClass", () => {
   it("returns the correct result", async () => {
-    const result = await startsWithG();
-    const allStartsWithG = result.every(({ name }) => name.startsWith("G"));
+    const result = await numOfStudentsInEachClass();
 
-    expect(result).toHaveLength(15);
-    expect(allStartsWithG).toBe(true);
-  });
-});
-
-describe("endsWithY", () => {
-  it("returns the correct result", async () => {
-    const result = await endsWithY();
-    const allEndsWithY = result.every(({ name }) => name.endsWith("y"));
-
-    expect(result).toHaveLength(8);
-    expect(allEndsWithY).toBe(true);
-  });
-});
-
-describe("top10BiggestInPopulation", () => {
-  it("returns the correct result", async () => {
-    const result = await top10BiggestInPopulation();
-
-    expect(result).toHaveLength(10);
-    expect(rankOf(result, "China")).toBe(0);
-    expect(rankOf(result, "Nigeria")).toBe(9);
-  });
-});
-
-describe("top5LongestLifeExpectancy", () => {
-  it("returns the correct result", async () => {
-    const result = await top5LongestLifeExpectancy();
-
-    expect(result).toHaveLength(5);
-    expect(rankOf(result, "Andorra")).toBe(0);
-    expect(rankOf(result, "Singapore")).toBe(4);
-  });
-});
-
-describe("top10SmallestInPopulation", () => {
-  it("returns the correct result", async () => {
-    const result = await top10SmallestInPopulation();
-
-    expect(result).toHaveLength(10);
-    expect(rankOf(result, "Pitcairn")).toBe(0);
-    expect(rankOf(result, "Saint Helena")).toBe(9);
-  });
-});
-
-describe("largerThanFrance", () => {
-  it("returns the correct result", async () => {
-    const result = await largerThanFrance();
-
-    expect(result).toHaveLength(20);
+    expect(result).toHaveLength(7);
+    expect(JSON.stringify(result)).toContain("0");
   });
 });
